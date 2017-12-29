@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>主页</title>
+	<meta name="viewport" content="width=device-width,maximum-scale=1.0,minimum-scale=1.0,initial-scale=1.0,user-scalable=no">
+	<meta name="format-detection" content="telephone=no,email=no,adress=no">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1.0">
+	<link rel="stylesheet" href="style.css">
+</head>
+<body ng-app="app">
+	<div class="box">
+		<header>
+			<a href="javascript:;"></a>
+		</header>
+		<main>
+			<ul>
+				<li><a class="bg" href="javascript:;">普通登陆</a></li>
+				<li><a href="javascript:;">短信验证码登陆</a></li>
+			</ul>
+			<form ng-controller="dianji1">
+				<div ng-show="show">
+					<ul>
+						<li><input type="text" placeholder="您的邮箱/手机号" id="dengluuser"></li>
+						<li><input type="password" placeholder="您的密码" id="denglupass"></li>
+					</ul>
+					<div class="btn">
+						<a href="javascript:;" class="bg1" ng-click="deng()">登陆</a>
+						<a href="javascript:;" ng-click="HIDE()">快速注册</a>
+					</div>
+				</div>
+				<div ng-hide="hide">
+					<ul>
+						<li><input type="text" placeholder="您的注册邮箱/手机号" id="zhuceuser"></li>
+						<li><input type="password" placeholder="您的注册密码" id="zhucepass"></li>
+					</ul>
+					<div class="btn">
+						<a href="javascript:;" class="bg1" ng-click="zhuce()">注册</a>
+						<a href="javascript:;" ng-click="SHOW()">登陆</a>
+					</div>
+				</div>
+			</form>
+		</main>
+		<footer></footer>
+	</div>
+	<script src="angular.min.js"></script>
+	<script>
+		var app = angular.module("app",[]);
+		var arr = [
+			{
+				user:"sangning",
+				pass:"123123123"
+			},{
+				user:"ning",
+				pass:"123123123"
+			}
+		];
+		function clear(){
+			var inp = document.getElementsByTagName("input");
+			for(var i=0; i<inp.length; i++){
+				inp[i].value="";
+			}
+		}
+		app.controller("dianji1",function($scope){
+			$scope.show=true;
+			$scope.hide=true;
+			$scope.SHOW=function(){
+				$scope.show=true;
+				$scope.hide=true;
+				clear();
+			}
+			$scope.HIDE=function(){
+				$scope.show=false;
+				$scope.hide=false;
+				clear();
+			}
+			$scope.deng=function(){
+				var dengluuser = document.getElementById("dengluuser");
+				var denglupass = document.getElementById("denglupass");
+				var dengluuserv = dengluuser.value;
+				var denglupassv = denglupass.value;
+				var shuju = "";
+				for(var i=0; i<arr.length; i++){
+					if(arr[i].user === dengluuserv){
+						if(arr[i].pass === denglupassv){
+							shuju = "登陆成功";
+							break;
+						}else{
+							shuju = "密码错误";
+							break;
+						}
+					}else{
+						shuju = "用户名错误";
+					}
+				}
+				alert(shuju);
+				clear();
+			}
+			$scope.zhuce=function(){
+				var zhuceuser = document.getElementById("zhuceuser");
+				var zhucepass = document.getElementById("zhucepass");
+				var zhuceuserv = zhuceuser.value;
+				var zhucepassv = zhucepass.value;
+				var newobj = {};
+				newobj.user = zhuceuserv;
+				newobj.pass = zhucepassv;
+				arr.push(newobj);
+				/*var shuju = "";
+				for(var i=0; i<arr.length; i++){
+					if(arr[i].user === dengluuserv){
+						if(arr[i].pass === denglupassv){
+							shuju = "登陆成功";
+							break;
+						}else{
+							shuju = "密码错误";
+							break;
+						}
+					}else{
+						shuju = "用户名错误";
+					}
+				}*/
+				alert("注册成功");
+				clear();
+			}
+		})
+	</script>
+</body>
+</html>
